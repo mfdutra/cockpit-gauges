@@ -42,7 +42,6 @@ function verticalGauge(p)
 
 	var marker = paper.path('M 4 ' + (100-p.marker) + ' l 12 -8 l 0 16 z');
 	marker.attr({fill: 'white'});
-	mmm = marker;
 
 	box.toFront();
 }
