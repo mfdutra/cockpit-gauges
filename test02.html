@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt_BR">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Test 01 - Raphael</title>
+	<title>Test 02 - Raphael</title>
 	<script type="text/javascript" src='raphael-min.js'></script>
 	<script type="text/javascript" src='gauges.js'></script>
 	<style type="text/css">
@@ -16,19 +16,17 @@
 
 <body>
 
-<h1>Test 01 - Raphael</h1>
-
-<hr/>
-
 <script type="text/javascript">
 
-verticalGauge({
-	x: 100,
-	y: 100,
-	red: [[0,10], [80, 100]],
-	yellow: [[40,70]],
-	green: [[15,30]],
-	marker: 40,
+speedometer({
+	x: 0,
+	y: 0,
+	marker: 60,
+	green: [[10,50]],
+	yellow: [[50, 70]],
+	red: [[0,10], [70,99]],
+	value: 2260,
+	title: 'RPM',
 });
 
 </script>
