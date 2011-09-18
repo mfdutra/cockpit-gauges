@@ -1,7 +1,7 @@
 /*
  * Call example:
  *
- * verticalGauge({
+ * var gauge = new verticalGauge({
  * 	x: 100,
  * 	y: 100,
  * 	red: [[0,10], [80, 100]],
@@ -9,6 +9,7 @@
  * 	green: [[15,30]],
  * 	marker: 53,
  * });
+ * gauge.setMarker(90);
  */
 function verticalGauge(p)
 {
@@ -63,6 +64,19 @@ function verticalGauge(p)
 	box.toFront();
 }
 
+/*
+ * var speed = new speedometer({
+ * 	x: 0,
+ * 	y: 0,
+ * 	marker: 60,
+ * 	green: [[10,50]],
+ * 	yellow: [[50, 70]],
+ * 	red: [[0,10], [70,100]],
+ * 	value: 2260,
+ * 	title: 'RPM',
+ * });
+ * speed.setMarker(90);
+ */
 function speedometer(p)
 {
 	var paper = Raphael(p.x, p.y, 120, 120);
