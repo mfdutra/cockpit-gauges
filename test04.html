@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt_BR">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Test 04 - Raphael</title>
+	<script type="text/javascript" src='raphael-min.js'></script>
+	<script type="text/javascript" src='gauges.js'></script>
+	<style type="text/css">
+		body {
+			background-color: black;
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+var speed = new dblSpeedometer({
+	x: 0,
+	y: 0,
+	greenA: [[10,50]],
+	yellowA: [[50, 70]],
+	redA: [[0,10], [70,100]],
+	greenB: [[0,50]],
+	yellowB: [[50, 70]],
+	redB: [[70,100]],
+	markerA: 12,
+	markerB: 80,
+	valueA: '12345',
+	valueB: '67890',
+	title: 'EBT',
+});
+
+</script>
+
+</body>
+</html>

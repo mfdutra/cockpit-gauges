@@ -123,6 +123,7 @@ function speedometer(p)
 
 	var markerArrow = paper.path('M 57 60 L 60 10 L 63 60 z');
 	markerArrow.attr({fill: 'white', 'stroke-width': 0});
+	markerArrow.rotate(-110, 60, 60);
 
 	this.marker = 0;
 	this.setMarker = function(markerPos)
@@ -175,6 +176,186 @@ function speedometer(p)
 	{
 		this.setTitle(p.title);
 	}
+}
+
+function dblSpeedometer(p)
+{
+	var paper = Raphael(p.x, p.y, 120, 120);
+
+	// Outer border
+	var border = paper.circle(60, 60, 55);
+	border.attr({stroke: '#444', 'stroke-width': '6px'});
+
+	// Outer white line
+	var radius = 52;
+	var x1 = 60 - Math.cos(40 * Math.PI/180) * radius;
+	var y1 = 60 + Math.sin(40 * Math.PI/180) * radius;
+	var x2 = 60 - Math.cos(60 * Math.PI/180) * radius;
+	var y2 = 60 - Math.sin(60 * Math.PI/180) * radius;
+	var outLineA = paper.path('M '+x1+' '+y1+' A 52 52 0 0 1 '+x2+' '+y2);
+	outLineA.attr({stroke: 'white'});
+
+	var x1 = 60 + Math.cos(40 * Math.PI/180) * radius;
+	var y1 = 60 + Math.sin(40 * Math.PI/180) * radius;
+	var x2 = 60 + Math.cos(60 * Math.PI/180) * radius;
+	var y2 = 60 - Math.sin(60 * Math.PI/180) * radius;
+	var outLineB = paper.path('M '+x1+' '+y1+' A 52 52 0 0 0 '+x2+' '+y2);
+	outLineB.attr({stroke: 'white'});
+
+	// Outer line limits
+
+	// bottom left
+	var x1 = 60 - Math.cos(40 * Math.PI/180) * radius;
+	var y1 = 60 + Math.sin(40 * Math.PI/180) * radius;
+	var x2 = 60 - Math.cos(40 * Math.PI/180) * (radius-10);
+	var y2 = 60 + Math.sin(40 * Math.PI/180) * (radius-10);
+	paper.path('M '+x1+' '+y1+' L '+x2+' '+y2).attr({stroke: 'white'});
+
+	// top left
+	var x1 = 60 - Math.cos(60 * Math.PI/180) * radius;
+	var y1 = 60 - Math.sin(60 * Math.PI/180) * radius;
+	var x2 = 60 - Math.cos(60 * Math.PI/180) * (radius-10);
+	var y2 = 60 - Math.sin(60 * Math.PI/180) * (radius-10);
+	paper.path('M '+x1+' '+y1+' L '+x2+' '+y2).attr({stroke: 'white'});
+
+	// bottom right
+	var x1 = 60 + Math.cos(40 * Math.PI/180) * radius;
+	var y1 = 60 + Math.sin(40 * Math.PI/180) * radius;
+	var x2 = 60 + Math.cos(40 * Math.PI/180) * (radius-10);
+	var y2 = 60 + Math.sin(40 * Math.PI/180) * (radius-10);
+	paper.path('M '+x1+' '+y1+' L '+x2+' '+y2).attr({stroke: 'white'});
+
+	// top right
+	var x1 = 60 + Math.cos(60 * Math.PI/180) * radius;
+	var y1 = 60 - Math.sin(60 * Math.PI/180) * radius;
+	var x2 = 60 + Math.cos(60 * Math.PI/180) * (radius-10);
+	var y2 = 60 - Math.sin(60 * Math.PI/180) * (radius-10);
+	paper.path('M '+x1+' '+y1+' L '+x2+' '+y2).attr({stroke: 'white'});
+
+	// Method to draw the color bands
+	function drawBand(from, to, color, leftRight)
+	{
+		var radius = 49;
+
+		// Band limits
+		if (to > 100) to = 100;
+		if (from < 0) from = 0;
+
+		// Translate % into angles (220 deg total, from -20 to 200)
+		if (leftRight) // right
+		{
+			from = -40 + from;
+			to   = -40 + to;
+			sweepFlag = 1;
+		}
+		else // left
+		{
+			from = 220 - from;
+			to   = 220 - to;
+			sweepFlag = 0;
+		}
+
+		// Determine points of arc
+		var x1 = 60 + Math.cos(to * Math.PI/180) * radius;
+		var y1 = 60 + Math.sin(to * Math.PI/180) * radius * -1;
+		var x2 = 60 + Math.cos(from * Math.PI/180) * radius;
+		var y2 = 60 + Math.sin(from * Math.PI/180) * radius * -1;
+
+		// If the arc is greather than 180, turn the large-arc-flag on
+		var largeArcFlag = ((from-to) >= 180) ? 1 : 0;
+
+		var path = paper.path('M ' + x1 + ',' + y1 + ' A ' + radius + ',' + radius + ' 0 ' + largeArcFlag + ' '+sweepFlag+' ' + x2 + ',' + y2);
+		path.attr({stroke: color, 'stroke-width': '5px'});
+		path.toBack();
+	}
+
+	// draw left color bands
+	if (p.greenA)
+		for (var i = 0; i < p.greenA.length; i++)
+			drawBand(p.greenA[i][0], p.greenA[i][1], 'green', false);
+	if (p.yellowA)
+		for (var i = 0; i < p.yellowA.length; i++)
+			drawBand(p.yellowA[i][0], p.yellowA[i][1], 'yellow', false);
+	if (p.redA)
+		for (var i = 0; i < p.redA.length; i++)
+			drawBand(p.redA[i][0], p.redA[i][1], 'red', false);
+
+	// draw right color bands
+	if (p.greenB)
+		for (var i = 0; i < p.greenB.length; i++)
+			drawBand(p.greenB[i][0], p.greenB[i][1], 'green', true);
+	if (p.yellowB)
+		for (var i = 0; i < p.yellowB.length; i++)
+			drawBand(p.yellowB[i][0], p.yellowB[i][1], 'yellow', true);
+	if (p.redB)
+		for (var i = 0; i < p.redB.length; i++)
+			drawBand(p.redB[i][0], p.redB[i][1], 'red', true);
+
+	// marker pointers
+	var markerArrowA = paper.path('M 57 60 L 60 10 L 63 60 z');
+	markerArrowA.attr({fill: 'white', 'stroke-width': 0});
+	markerArrowA.rotate(-130, 60, 60);
+	var markerArrowB = paper.path('M 57 60 L 60 10 L 63 60 z');
+	markerArrowB.attr({fill: 'white', 'stroke-width': 0});
+	markerArrowB.rotate(130, 60, 60);
+
+	this.markerA = 0;
+	this.markerB = 0;
+
+	this.setMarker = function(markerPos, leftRight)
+	{
+		// Marker limits
+		if (markerPos > 100) markerPos = 100;
+		if (markerPos < 0) markerPos = 0;
+
+		if (leftRight) // right
+		{
+			markerArrowB.animate({'rotation': (130 - markerPos) + ' 60 60'}, 1000, '>');
+			this.markerB = markerPos;
+		}
+		else // left
+		{
+			markerArrowA.animate({'rotation': (-130 + markerPos) + ' 60 60'}, 1000, '>');
+			this.markerA = markerPos;
+		}
+	}
+	this.setMarkerA = function(markerPos) { this.setMarker(markerPos, false) };
+	this.setMarkerB = function(markerPos) { this.setMarker(markerPos, true) };
+
+	if (p.markerA) this.setMarkerA(p.markerA);
+	if (p.markerB) this.setMarkerB(p.markerB);
+
+	// center pivot
+	var pivot = paper.circle(60, 60, 5);
+	pivot.attr({fill: '#555', 'stroke-width': 0});
+
+	// value and title
+	this.setValueA = function(valueStr)
+	{
+		valueA.attr({'text': valueStr});
+	}
+
+	this.setValueB = function(valueStr)
+	{
+		valueB.attr({'text': valueStr});
+	}
+
+	this.setTitle = function(valueStr)
+	{
+		title.attr({'text': valueStr});
+	}
+
+	var valueA = paper.text(42, 98, '');
+	valueA.attr({fill: '#0ff', 'font-size': '10px'});
+	var valueB = paper.text(78, 98, '');
+	valueB.attr({fill: '#0ff', 'font-size': '10px'});
+
+	var title = paper.text(60, 18, '');
+	title.attr({fill: 'white', 'font-size': '10px'});
+
+	if (p.valueA) this.setValueA(p.valueA);
+	if (p.valueB) this.setValueB(p.valueB);
+	if (p.title) this.setTitle(p.title);
 }
 
 function svgClock(x, y)
