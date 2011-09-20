@@ -81,7 +81,7 @@ function speedometer(p)
 {
 	var paper = Raphael(p.x, p.y, 120, 120);
 	var border = paper.circle(60, 60, 55);
-	border.attr({stroke: '#555', 'stroke-width': '6px'});
+	border.attr({stroke: '#444', 'stroke-width': '6px'});
 
 	function drawBand(from, to, color)
 	{
@@ -149,7 +149,7 @@ function speedometer(p)
 	lineDots.attr({stroke: 'white'});
 
 	var pivot = paper.circle(60, 60, 5);
-	pivot.attr({fill: '#555', 'stroke-width': 0});
+	pivot.attr({fill: '#444', 'stroke-width': 0});
 
 	this.setValue = function(valueStr)
 	{
@@ -349,7 +349,7 @@ function dblSpeedometer(p)
 
 	// center pivot
 	var pivot = paper.circle(60, 60, 5);
-	pivot.attr({fill: '#555', 'stroke-width': 0});
+	pivot.attr({fill: '#444', 'stroke-width': 0});
 
 	// value and title
 	this.setValueA = function(valueStr)
@@ -387,7 +387,7 @@ function svgClock(x, y)
 
 	// Outer border
 	var border = paper.circle(center, center, 75);
-	border.attr({stroke: '#555', 'stroke-width': '6px'});
+	border.attr({stroke: '#444', 'stroke-width': '6px'});
 
 	// 1-minute ticks
 	for (var angle=0; angle < 360; angle += 6)
@@ -418,7 +418,7 @@ function svgClock(x, y)
 
 	// pivot
 	var pivot = paper.circle(center, center, 5);
-	pivot.attr({'stroke-width': 0, fill: '#555'});
+	pivot.attr({'stroke-width': 0, fill: '#444'});
 
 	var drawClock = function()
 	{
