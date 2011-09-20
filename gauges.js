@@ -193,12 +193,16 @@ function speedometer(p)
 		valueA: '12345',
 		valueB: '67890',
 		title: 'EBT',
+		subtitleA: 'In',
+		subtitleB: 'Out',
 	});
 	speed.setMarkerA(70);
 	speed.setMarkerB(24);
 	speed.setValueA('1234');
 	speed.setValueB('5678');
 	speed.setTitle('bla');
+	speed.subtitleA('In');
+	speed.subtitleB('Out');
 */ 
 function dblSpeedometer(p)
 {
@@ -367,10 +371,25 @@ function dblSpeedometer(p)
 		title.attr({'text': valueStr});
 	}
 
+	this.setSubtitleA = function(valueStr)
+	{
+		subtitleA.attr({'text': valueStr});
+	}
+
+	this.setSubtitleB = function(valueStr)
+	{
+		subtitleB.attr({'text': valueStr});
+	}
+
 	var valueA = paper.text(42, 98, '');
 	valueA.attr({fill: '#0ff', 'font-size': '10px'});
 	var valueB = paper.text(78, 98, '');
 	valueB.attr({fill: '#0ff', 'font-size': '10px'});
+
+	var subtitleA = paper.text(34, 40, '');
+	subtitleA.attr({fill: 'white', 'font-size': '10px'});
+	var subtitleB = paper.text(87, 40, '');
+	subtitleB.attr({fill: 'white', 'font-size': '10px'});
 
 	var title = paper.text(60, 18, '');
 	title.attr({fill: 'white', 'font-size': '10px'});
@@ -378,6 +397,8 @@ function dblSpeedometer(p)
 	if (p.valueA) this.setValueA(p.valueA);
 	if (p.valueB) this.setValueB(p.valueB);
 	if (p.title) this.setTitle(p.title);
+	if (p.subtitleA) this.setSubtitleA(p.subtitleA);
+	if (p.subtitleB) this.setSubtitleB(p.subtitleB);
 }
 
 function svgClock(x, y)
