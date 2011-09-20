@@ -178,6 +178,28 @@ function speedometer(p)
 	}
 }
 
+/* Call example
+	var speed = new dblSpeedometer({
+		x: 0,
+		y: 0,
+		greenA: [[10,50]],
+		yellowA: [[50, 70]],
+		redA: [[0,10], [70,100]],
+		greenB: [[0,50]],
+		yellowB: [[50, 70]],
+		redB: [[70,100]],
+		markerA: 12,
+		markerB: 80,
+		valueA: '12345',
+		valueB: '67890',
+		title: 'EBT',
+	});
+	speed.setMarkerA(70);
+	speed.setMarkerB(24);
+	speed.setValueA('1234');
+	speed.setValueB('5678');
+	speed.setTitle('bla');
+*/ 
 function dblSpeedometer(p)
 {
 	var paper = Raphael(p.x, p.y, 120, 120);
