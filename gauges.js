@@ -198,6 +198,7 @@ function speedometer(p)
 	});
 	speed.setMarkerA(70);
 	speed.setMarkerB(24);
+	speed.setMarkerAB(70, 24);
 	speed.setValueA('1234');
 	speed.setValueB('5678');
 	speed.setTitle('bla');
@@ -347,6 +348,11 @@ function dblSpeedometer(p)
 	}
 	this.setMarkerA = function(markerPos) { this.setMarker(markerPos, false) };
 	this.setMarkerB = function(markerPos) { this.setMarker(markerPos, true) };
+	this.setMarkerAB = function(mA, mB)
+	{
+		this.setMarker(mA, false);
+		this.setMarker(mB, true);
+	}
 
 	if (p.markerA) this.setMarkerA(p.markerA);
 	if (p.markerB) this.setMarkerB(p.markerB);
