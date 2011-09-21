@@ -13,7 +13,7 @@
  */
 function verticalGauge(p)
 {
-	var paper = Raphael(p.x, p.y, 16, 100);
+	var paper = Raphael(p.x, p.y, 50, 150);
 
 	var box = paper.path('M 16 0 L 0 0 L 0 100 L 16 100');
 	box.attr({stroke: 'white'});
@@ -62,6 +62,41 @@ function verticalGauge(p)
 		this.setMarker(p.marker);
 
 	box.toFront();
+
+	var title = paper.text(0, 110, '');
+	title.attr({fill: 'white', 'font-size': '12px', 'text-anchor': 'start'});
+
+	var value = paper.text(0, 125, '');
+	value.attr({fill: '#0ff', 'font-size': '14px', 'text-anchor': 'start'});
+
+	this.setValue = function(valueStr)
+	{
+		value.attr({'text': valueStr});
+	}
+
+	this.setTitle = function(valueStr)
+	{
+		title.attr({'text': valueStr});
+	}
+
+	if (p.value) this.setValue(p.value);
+	if (p.title) this.setTitle(p.title);
+
+	this.setInvalid = function(state)
+	{
+		if (state)
+		{
+			this.redCross = paper.path('M 0 0 L 16 100 M 0 100 L 16 0');
+			this.redCross.attr({stroke: 'red', 'stroke-width': '3px'});
+		}
+		else
+		{
+			if (this.redCross)
+			{
+				this.redCross.remove();
+			}
+		}
+	}
 }
 
 /*
@@ -175,6 +210,25 @@ function speedometer(p)
 	if (p.title)
 	{
 		this.setTitle(p.title);
+	}
+
+	this.setInvalid = function(state)
+	{
+		if (state)
+		{
+			this.cover = paper.circle(60, 60, 53);
+			this.cover.attr({fill: '#444', 'stroke-width': 0, opacity: .7});
+			this.redCross = paper.path('M 23.230447388 23.230447388 L 96.769552612 96.769552612 M 23.230447388 96.769552612 L 96.769552612 23.230447388');
+			this.redCross.attr({stroke: 'red', 'stroke-width': '8px'});
+		}
+		else
+		{
+			if (this.cover)
+			{
+				this.cover.remove();
+				this.redCross.remove();
+			}
+		}
 	}
 }
 
@@ -360,6 +414,26 @@ function dblSpeedometer(p)
 	// center pivot
 	var pivot = paper.circle(60, 60, 5);
 	pivot.attr({fill: '#444', 'stroke-width': 0});
+
+	// set invalid method
+	this.setInvalid = function(state)
+	{
+		if (state)
+		{
+			this.cover = paper.circle(60, 60, 53);
+			this.cover.attr({fill: '#444', 'stroke-width': 0, opacity: .7});
+			this.redCross = paper.path('M 23.230447388 23.230447388 L 96.769552612 96.769552612 M 23.230447388 96.769552612 L 96.769552612 23.230447388');
+			this.redCross.attr({stroke: 'red', 'stroke-width': '8px'});
+		}
+		else
+		{
+			if (this.cover)
+			{
+				this.cover.remove();
+				this.redCross.remove();
+			}
+		}
+	}
 
 	// value and title
 	this.setValueA = function(valueStr)
