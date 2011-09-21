@@ -521,6 +521,13 @@ function svgClock(x, y)
 	var pivot = paper.circle(center, center, 5);
 	pivot.attr({'stroke-width': 0, fill: '#444'});
 
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	var date = paper.text(center, 110, '');
+	date.attr({fill: '#999', 'font-size': '16px', 'font-weight': "bold"})
+	var weekDay = paper.text(center, 125, '');
+	weekDay.attr({fill: '#999', 'font-size': '12px', 'font-weight': ""})
+
 	var drawClock = function()
 	{
 		var now = new Date();
@@ -531,6 +538,8 @@ function svgClock(x, y)
 		minuteL.rotate(m * 6, center, center);
 		hour.rotate(h * 30, center, center);
 		hourL.rotate(h * 30, center, center);
+		date.attr({text: now.getDate() + '/' + months[now.getMonth()]});
+		weekDay.attr({text: weekDays[now.getDay()]});
 	}
 
 	var setClock = function()
