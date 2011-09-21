@@ -506,6 +506,14 @@ function svgClock(x, y)
 		tick.rotate(angle, center, center);
 	}
 
+	// date and week day
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	var date = paper.text(center, 110, '');
+	date.attr({fill: '#999', 'font-size': '16px', 'font-weight': "bold"})
+	var weekDay = paper.text(center, 125, '');
+	weekDay.attr({fill: '#999', 'font-size': '12px', 'font-weight': ""})
+
 	// clock pointers
 	var minute = paper.path('M 78.5 80 v -58 l 1.5 -4 l 1.5 4 v 58 z');
 	minute.attr({'stroke-width': 0, 'fill': 'white'});
@@ -520,13 +528,6 @@ function svgClock(x, y)
 	// pivot
 	var pivot = paper.circle(center, center, 5);
 	pivot.attr({'stroke-width': 0, fill: '#444'});
-
-	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	var date = paper.text(center, 110, '');
-	date.attr({fill: '#999', 'font-size': '16px', 'font-weight': "bold"})
-	var weekDay = paper.text(center, 125, '');
-	weekDay.attr({fill: '#999', 'font-size': '12px', 'font-weight': ""})
 
 	var drawClock = function()
 	{
