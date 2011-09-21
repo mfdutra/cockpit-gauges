@@ -197,7 +197,7 @@ function speedometer(p)
 	}
 
 	var value = paper.text(60, 95, '');
-	value.attr({fill: 'white', 'font-size': '16px'});
+	value.attr({fill: '#0ff', 'font-size': '16px'});
 
 	var title = paper.text(60, 80, '');
 	title.attr({fill: 'white', 'font-size': '12px'});
