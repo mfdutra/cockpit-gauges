@@ -485,6 +485,8 @@ function svgClock(x, y)
 {
 	var center = 80;
 	var paper = Raphael(x, y, 160, 160);
+    var previousHRotation = 0;
+    var previousMRotation = 0;
 
 	// Outer border
 	var border = paper.circle(center, center, 75);
@@ -516,12 +518,12 @@ function svgClock(x, y)
 
 	// clock pointers
 	var minute = paper.path('M 78.5 80 v -58 l 1.5 -4 l 1.5 4 v 58 z');
-	minute.attr({'stroke-width': 0, 'fill': 'white'});
+	minute.attr({'stroke-width': 0, 'fill': 'blue'});
 	var minuteL = paper.path('M 80 80 v -58');
 	minuteL.attr({'stroke-width': '1px', 'stroke': '#aaa'});
 
 	var hour = paper.path('M 78.5 80 v -38 l 1.5 -4 l 1.5 4 v 38 z');
-	hour.attr({'stroke-width': '0', 'fill': '#ddd'});
+	hour.attr({'stroke-width': '0', 'fill': '#44f'});
 	var hourL = paper.path('M 80 80 v -38');
 	hourL.attr({'stroke-width': '1px', 'stroke': '#aaa'});
 
@@ -534,11 +536,17 @@ function svgClock(x, y)
 		var now = new Date();
 		var m = now.getMinutes() + (now.getSeconds() / 60.0);
 		var h = now.getHours() + (m / 60.0);
+        var m_deg = m * 6;
+        var h_deg = h * 30;
 
-		minute.rotate(m * 6, center, center);
-		minuteL.rotate(m * 6, center, center);
-		hour.rotate(h * 30, center, center);
-		hourL.rotate(h * 30, center, center);
+		minute.rotate(m_deg - previousMRotation, center, center);
+		minuteL.rotate(m_deg - previousMRotation, center, center);
+		hour.rotate(h_deg - previousHRotation, center, center);
+		hourL.rotate(h_deg - previousHRotation, center, center);
+
+        previousHRotation = h_deg;
+        previousMRotation = m_deg;
+
 		date.attr({text: now.getDate() + '/' + months[now.getMonth()]});
 		weekDay.attr({text: weekDays[now.getDay()]});
 	}
